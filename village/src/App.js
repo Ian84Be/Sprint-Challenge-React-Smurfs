@@ -42,8 +42,11 @@ class App extends Component {
       <div className="App">
 
       <div className="nav">
-      <NavLink to="/smurf-form">Add Smurf</NavLink>
-      <NavLink to="/">Home</NavLink>
+      <NavLink to="/smurf-form"
+      activeClassName="active">Add Smurf</NavLink>
+
+      <NavLink exact to="/"
+      activeClassName="active">Home</NavLink>
       </div>
 
       <Route path="/smurf-form" render={props => (

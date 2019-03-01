@@ -1,0 +1,14 @@
+.Smurf {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin:4px;
+}
+
+h3 {
+    color:blue;
+}
+
+strong {
+    color:blue;
+}
