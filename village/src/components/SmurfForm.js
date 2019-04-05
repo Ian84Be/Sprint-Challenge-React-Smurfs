@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
+import axios from 'axios';
+
+import './SmurfForm.css';
 
 class SmurfForm extends Component {
   constructor(props) {
@@ -6,19 +10,24 @@ class SmurfForm extends Component {
     this.state = {
       name: '',
       age: '',
-      height: ''
+      height: '',
+      toHome:false,
     };
   }
 
   addSmurf = event => {
     event.preventDefault();
     // add code to create the smurf using the api
-
-    this.setState({
-      name: '',
-      age: '',
-      height: ''
-    });
+    let newSmurf = {
+      name: this.state.name,
+      age: this.state.age,
+      height: this.state.height,
+    }
+    axios.post('http://localhost:3333/smurfs', newSmurf)
+    .then(() => this.setState(() => ({
+      toHome: true
+    })))
+    .catch(err => console.log(err));
   }
 
   handleInputChange = e => {
@@ -26,6 +35,9 @@ class SmurfForm extends Component {
   };
 
   render() {
+    if (this.state.toHome === true) {
+      return <Redirect to="/" />
+    }
     return (
       <div className="SmurfForm">
         <form onSubmit={this.addSmurf}>
