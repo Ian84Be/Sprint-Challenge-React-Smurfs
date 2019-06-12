@@ -5,28 +5,23 @@ import axios from 'axios';
 import './SmurfForm.css';
 
 class SmurfForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      age: '',
-      height: '',
-      toHome:false,
-    };
-  }
+  state = {
+    name: '',
+    age: '',
+    height: '',
+    toHome:false,
+  };
 
   addSmurf = event => {
     event.preventDefault();
-    // add code to create the smurf using the api
     let newSmurf = {
       name: this.state.name,
       age: this.state.age,
       height: this.state.height,
     }
     axios.post('http://localhost:3333/smurfs', newSmurf)
-    .then(() => this.setState(() => ({
-      toHome: true
-    })))
+    .then(res => this.props.getSmurfs())
+    .then(res => this.setState(({toHome: true})))
     .catch(err => console.log(err));
   }
 
@@ -35,27 +30,28 @@ class SmurfForm extends Component {
   };
 
   render() {
-    if (this.state.toHome === true) {
-      return <Redirect to="/" />
-    }
+    if (this.state.toHome === true) return ( <Redirect to="/" /> );
     return (
       <div className="SmurfForm">
         <form onSubmit={this.addSmurf}>
+          <label htmlFor="name">Name</label>
           <input
+            id="name"
             onChange={this.handleInputChange}
-            placeholder="name"
             value={this.state.name}
             name="name"
           />
+          <label htmlFor="age">Age</label>
           <input
+            id="age"
             onChange={this.handleInputChange}
-            placeholder="age"
             value={this.state.age}
             name="age"
           />
+          <label htmlFor="height">Height</label>
           <input
+            id="height"
             onChange={this.handleInputChange}
-            placeholder="height"
             value={this.state.height}
             name="height"
           />
